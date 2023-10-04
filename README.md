@@ -103,4 +103,26 @@ After running your tests and verifying the results, it's a good practice to clea
 
 ## GitHub Actions Setup
 
-WIP
+### Setting Up Secrets in GitHub
+Before the GitHub Action can run successfully, you need to set up secrets in your GitHub repository. These secrets will store sensitive information like your username, email, and password, ensuring they're not exposed in your scripts.
+
+1. Navigate to your GitHub repository.
+1. Click on the `Settings` tab.
+1. In the left sidebar, click on `Secrets`.
+1. Click on the `New repository secret` button.
+1. Add the following secrets:
+    - `USERNAME`: Your GitHub username.
+    - `EMAIL`: The email associated with your GitHub account.
+    - `PASSWORD`: Your GitHub password.
+
+Remember, these secrets are encrypted and can only be accessed by workflows running in the same repository.
+
+### Storing the GitHub Action Workflow
+The GitHub Action workflow is defined in a YAML file. This file should be stored in the `.github/workflows` directory of your repository. For our setup, you might name the file `selenium_test.yml` or something descriptive of its purpose.
+
+### Triggering the GitHub Action
+In our setup, the GitHub Action is triggered every time there's a push to the main branch. This means that whenever you merge a pull request or directly push changes to the main branch, the workflow will automatically run, executing the Selenium tests using the provided secrets.
+
+By integrating this into your CI/CD pipeline, you ensure that UI tests are always run before changes are merged, helping catch potential issues early.
+
+Remember, while GitHub Actions provide a powerful way to automate tasks, always ensure that sensitive information is stored securely using the provided secrets mechanism.
