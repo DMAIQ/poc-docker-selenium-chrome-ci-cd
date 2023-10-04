@@ -10,6 +10,9 @@ It demonstrates how to set up a CI/CD pipeline for UI testing using Selenium wit
 - [Python](https://www.python.org/downloads/) - via Windows Installer
 - [GitHub](https://github.com/) Account
 
+## Notices
+- The example test script will not be able to confirm login using USERNAME if MFA has been enabled.
+
 ## Local Setup and Execution
 
 ### 1. Set Up a local Selenium/Chrome instance with Docker
