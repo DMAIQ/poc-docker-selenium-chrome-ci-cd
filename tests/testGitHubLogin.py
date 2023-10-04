@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 print("Beginning script testGitHubLogin...")
 
 # Retrieve email and password from environment variables
-print("Retrieving email and password from environment variables...")
+print("Retrieving username/email/password from environment variables...")
 expected_username = os.environ.get('USERNAME')
 email = os.environ.get('EMAIL')
 password = os.environ.get('PASSWORD')
@@ -20,7 +20,6 @@ if not email or not password or not expected_username:
 print("Setting up the Chrome WebDriver and navigating to GitHub's login page...")
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
-options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-blink-features=AutomationControlled")  # This flag will prevent the "controlled by automation" bar from appearing
 driver = webdriver.Chrome(options=options)
@@ -47,18 +46,35 @@ sign_in_button = WebDriverWait(driver, 20).until(
 )
 sign_in_button.click()
 
+def get_username_from_tags(driver, tags):
+    for tag, attribute in tags:
+        try:
+            element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, f"//meta[@name='{tag}']"))
+            )
+            content = element.get_attribute(attribute)
+            if content:
+                return content
+        except:
+            continue
+    return None
+
 # After logging in, check the metadata for the username
 print("Checking the metadata for the username...")
-meta_tag = WebDriverWait(driver, 20).until(
-    EC.presence_of_element_located((By.XPATH, "//meta[@name='user-login']"))
-)
-meta_content = meta_tag.get_attribute("content")
 
-# Compare the content of the meta tag with the expected username
-if meta_content == expected_username:
-    print(f"Metadata username matches expected: {meta_content}")
+tags_to_check = [
+    ("octolytics-actor-login", "content"),
+    ("user-login", "content"),
+    ("alternate", "href")
+]
+
+found_username = get_username_from_tags(driver, tags_to_check)
+
+# Compare the found username with the expected username
+if found_username == expected_username:
+    print(f"Username matches expected: {found_username}")
 else:
-    print(f"Error: Expected username '{expected_username}' in metadata but found '{meta_content}'.")
+    print(f"Error: Expected username '{expected_username}' but found '{found_username if found_username else 'None'}'.")
 
 # ... Continue with the rest of your test steps, i.e. verify login, etc...
 

@@ -97,3 +97,6 @@ After running your tests and verifying the results, it's a good practice to clea
         cd ..
         rm -rf poc-docker-selenium-chrome-ci-cd
         ```
+
+## GitHub Actions Setup
+
