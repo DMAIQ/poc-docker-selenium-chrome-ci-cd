@@ -10,7 +10,7 @@ It demonstrates how to set up a CI/CD pipeline for UI testing using Selenium wit
 - [Python](https://www.python.org/downloads/) - via Windows Installer
 - [GitHub](https://github.com/) Account
 
-## Setup and Execution
+## Local Setup and Execution
 
 ### 1. Set Up a local Selenium/Chrome instance with Docker
 - Install Docker and the Windows Subsystem for Linux (WSL) 2 on your machine. Follow the [Docker installation guide](https://docs.docker.com/get-docker/) and the [WSL 2 installation guide](https://docs.microsoft.com/en-us/windows/wsl/install) for detailed instructions.
