@@ -55,7 +55,7 @@ try:
         EC.presence_of_element_located((By.XPATH, "//p[starts-with(text(), 'We just sent your authentication code via email to')]"))
     )
 
-    if verification_header and verification_message:
+    if verification_header or verification_message:
         print("Device verification page encountered. A verification code was sent to the provided email.")
         driver.quit()
         exit(1)
