@@ -75,6 +75,7 @@ if found_username == expected_username:
     print(f"Username matches expected: {found_username}")
 else:
     print(f"Error: Expected username '{expected_username}' but found '{found_username if found_username else 'None'}'.")
+    print(driver.page_source)
 
 # ... Continue with the rest of your test steps, i.e. verify login, etc...
 
