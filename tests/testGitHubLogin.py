@@ -46,36 +46,18 @@ sign_in_button = WebDriverWait(driver, 20).until(
 )
 sign_in_button.click()
 
-# Check for device verification page
-try:
-    verification_header = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//h1[text()='Device verification']"))
-    )
-    verification_message = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//p[starts-with(text(), 'We just sent your authentication code via email to')]"))
-    )
+# After logging in, check the metadata for the username
+print("Checking the metadata for the username...")
+meta_tag = WebDriverWait(driver, 20).until(
+    EC.presence_of_element_located((By.XPATH, "//meta[@name='user-login']"))
+)
+meta_content = meta_tag.get_attribute("content")
 
-    if verification_header or verification_message:
-        print("Device verification page encountered. A verification code was sent to the provided email.")
-        driver.quit()
-        exit(1)
-except:
-    print("No device verification page detected. Continuing to check for username...")
-
-    # Check the metadata for the username
-    try:
-        meta_tag = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//meta[@name='user-login']"))
-        )
-        meta_content = meta_tag.get_attribute("content")
-
-        # Compare the content of the meta tag with the expected username
-        if meta_content == expected_username:
-            print(f"Metadata username matches expected: {meta_content}")
-        else:
-            print(f"Error: Expected username '{expected_username}' in metadata but found '{meta_content}'.")
-    except:
-        print("Error: Unable to locate the username metadata.")
+# Compare the content of the meta tag with the expected username
+if meta_content == expected_username:
+    print(f"Metadata username matches expected: {meta_content}")
+else:
+    print(f"Error: Expected username '{expected_username}' in metadata but found '{meta_content}'.")
 
 # ... Continue with the rest of your test steps, i.e. verify login, etc...
 
