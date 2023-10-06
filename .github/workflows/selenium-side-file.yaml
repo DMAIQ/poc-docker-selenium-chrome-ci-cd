@@ -31,4 +31,9 @@ jobs:
     # Runs the Selenium IDE tests from the provided .side file
     - name: Run Selenium IDE tests
       run: selenium-side-runner -c "browserName=chrome chromeOptions.binary='/opt/google/chrome/google-chrome' chromeOptions.args=[--headless,--no-sandbox,--disable-dev-shm-usage,--disable-gpu,--remote-debugging-port=9222] webdriver.chrome.driver=/usr/bin/chromedriver" poc-azure-pipelines-selenium-tests.side
+      env:
+        SELENIUM_BROWSER_LOG_PATH: browser.log
 
+    - name: Print browser.log
+      if: failure()  # This ensures the step only runs if a previous step failed
+      run: cat browser.log
