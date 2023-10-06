@@ -28,4 +28,5 @@ jobs:
 
     # Runs the Selenium IDE tests from the provided .side file
     - name: Run Selenium IDE tests
-      run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[--headless,--no-sandbox] webdriver.chrome.driver=/usr/local/bin/chromedriver" poc-azure-pipelines-selenium-tests.side
+      run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[--headless,--disable-blink-features=AutomationControlled,--disable-dev-shm-usage] webdriver.chrome.driver=/usr/local/bin/chromedriver" poc-azure-pipelines-selenium-tests.side
+
