@@ -12,13 +12,13 @@ jobs:
     steps:
     # Checks out a copy of your repository on the ubuntu-latest machine
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     # Sets up Node.js version 14 on the runner
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: '18'
 
     # Installs selenium-side-runner and chromedriver globally
     - name: Install selenium-side-runner and WebDriver
