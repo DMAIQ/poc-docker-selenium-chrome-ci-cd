@@ -8,33 +8,31 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # Define a strategy to use the checked-out code inside the container
-    strategy:
-      matrix:
-        node-version: [18.x]
-        os: [ubuntu-latest]
-
-    # Define the steps of the job
     steps:
     # Checkout the code on the runner VM
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     # Installs selenium-side-runner on the runner VM
     - name: Install selenium-side-runner
       run: |
         npm install -g selenium-side-runner
 
-    # Use the selenium/standalone-chrome Docker container
-    - name: Run tests in container
-      uses: docker://selenium/standalone-chrome:latest
-      with:
-        entrypoint: /bin/sh
-        args: -c "selenium-side-runner -c 'browserName=chrome chromeOptions.args=[--headless,--no-sandbox] webdriver.chrome.driver=/usr/bin/chromedriver' /github/workspace/poc-azure-pipelines-selenium-tests.side"
-      env:
-        CI: true
+    # Start the standalone Chrome in the background
+    - name: Start Chrome in Docker
+      run: |
+        docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome
+
+    # Runs the Selenium IDE tests using the Dockerized Chrome
+    - name: Run Selenium IDE tests
+      run: |
+        SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[--headless,--no-sandbox]" poc-azure-pipelines-selenium-tests.side
 
     # Fetch Docker logs if there's a failure
     - name: Fetch Docker logs
       if: failure()
-      run: docker logs $(docker ps -q --filter ancestor=selenium/standalone-chrome:latest)
+      run: |
+        CONTAINER_ID=$(docker ps -q --filter ancestor=selenium/standalone-chrome)
+        if [ ! -z "$CONTAINER_ID" ]; then
+          docker logs $CONTAINER_ID
+        fi
