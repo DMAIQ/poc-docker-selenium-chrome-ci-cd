@@ -6,34 +6,28 @@ on: [push]
 
 jobs:
   test:
-    # Specifies that the job runs on the latest Ubuntu virtual machine
     runs-on: ubuntu-latest
+
+    # Use the selenium/standalone-chrome Docker container
+    container:
+      image: selenium/standalone-chrome:latest
+      options: --shm-size="2g"  # Increase shared memory size
 
     steps:
     # Checks out a copy of your repository on the ubuntu-latest machine
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Sets up Node.js version 14 on the runner
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-
     # Installs selenium-side-runner
     - name: Install selenium-side-runner
       run: |
         npm install -g selenium-side-runner
 
-    - name: Setup Chrome and ChromeDriver
-      uses: browser-actions/setup-chrome@latest
-
     # Runs the Selenium IDE tests from the provided .side file
     - name: Run Selenium IDE tests
-      run: selenium-side-runner -c "browserName=chrome chromeOptions.binary='/opt/google/chrome/google-chrome' chromeOptions.args=[--headless,--no-sandbox,--disable-dev-shm-usage,--disable-gpu,--remote-debugging-port=9222] webdriver.chrome.driver=/usr/bin/chromedriver" poc-azure-pipelines-selenium-tests.side
-      env:
-        SELENIUM_BROWSER_LOG_PATH: browser.log
+      run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[--headless,--no-sandbox] webdriver.chrome.driver=/usr/bin/chromedriver" poc-azure-pipelines-selenium-tests.side
 
-    - name: Print browser.log
-      if: failure()  # This ensures the step only runs if a previous step failed
-      run: cat browser.log
+    # Fetch Docker logs if there's a failure
+    - name: Fetch Docker logs
+      if: failure()
+      run: docker logs $(docker ps -q --filter ancestor=selenium/standalone-chrome:latest)
