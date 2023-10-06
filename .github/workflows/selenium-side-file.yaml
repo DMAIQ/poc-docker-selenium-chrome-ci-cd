@@ -23,9 +23,22 @@ jobs:
       run: |
         docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome
 
+    - name: List Docker Containers
+      run: docker ps
+
+    - name: Wait for a few seconds
+      run: sleep 10
+
     - name: Check Selenium Server
       run: |
         curl http://localhost:4444/status
+
+    - name: Check Selenium Docker Logs
+      run: |
+        CONTAINER_ID=$(docker ps -q --filter ancestor=selenium/standalone-chrome)
+        if [ ! -z "$CONTAINER_ID" ]; then
+          docker logs $CONTAINER_ID
+        fi
 
     # Runs the Selenium IDE tests using the Dockerized Chrome
     - name: Run Selenium IDE tests
