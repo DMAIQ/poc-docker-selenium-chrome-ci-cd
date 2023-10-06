@@ -23,6 +23,10 @@ jobs:
       run: |
         docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome
 
+    - name: Check Selenium Server
+      run: |
+        curl http://localhost:4444/status
+
     # Runs the Selenium IDE tests using the Dockerized Chrome
     - name: Run Selenium IDE tests
       run: |
