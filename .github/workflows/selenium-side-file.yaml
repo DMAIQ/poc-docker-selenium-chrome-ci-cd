@@ -14,9 +14,12 @@ jobs:
       options: --shm-size="2g"  # Increase shared memory size
 
     steps:
+    - name: Set permissions
+      run: sudo chmod -R 777 "$GITHUB_WORKSPACE"
+
     # Checks out a copy of your repository on the ubuntu-latest machine
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     # Installs selenium-side-runner
     - name: Install selenium-side-runner
