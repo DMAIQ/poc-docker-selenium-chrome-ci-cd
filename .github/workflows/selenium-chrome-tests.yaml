@@ -1,33 +1,45 @@
+# Name of the GitHub Action Workflow
 name: Run Selenium Chrome Tests
 
+# This workflow is triggered on every push to the repository
 on: [push]
 
 jobs:
   test:
+    # Specifies that the job runs on the latest Ubuntu virtual machine
     runs-on: ubuntu-latest
 
     steps:
+    # Checks out a copy of your repository on the ubuntu-latest machine
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # Sets up the specified version of Python on the runner
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.x'  # This will set up the latest version of Python 3
 
+    # Updates the package list and installs the stable version of Google Chrome
     - name: Install Chrome
       run: |
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
 
+    # Sets up ChromeDriver, which is required to run Selenium tests on Chrome
     - name: Set up ChromeDriver
       uses: nanasess/setup-chromedriver@master
 
+    # Installs the required Python dependencies
+    # First, it upgrades pip (Python's package installer)
+    # Then, it installs the Selenium package for Python
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install selenium
 
+    # Runs the Selenium tests using the specified Python script
+    # It also sets environment variables for the test script from GitHub secrets
     - name: Run tests
       run: python tests/testGitHubLogin.py
       env:

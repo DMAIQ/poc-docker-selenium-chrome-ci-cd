@@ -1,0 +1,31 @@
+# Name of the GitHub Action Workflow
+name: Run Selenium Chrome SIDE File Tests
+
+# This workflow is triggered on every push to the repository
+on: [push]
+
+jobs:
+  test:
+    # Specifies that the job runs on the latest Ubuntu virtual machine
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks out a copy of your repository on the ubuntu-latest machine
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Sets up Node.js version 14 on the runner
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    # Installs selenium-side-runner and chromedriver globally
+    - name: Install selenium-side-runner and WebDriver
+      run: |
+        npm install -g selenium-side-runner
+        npm install -g chromedriver
+
+    # Runs the Selenium IDE tests from the provided .side file
+    - name: Run Selenium IDE tests
+      run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[--headless,--no-sandbox] webdriver.chrome.driver=/usr/local/bin/chromedriver" poc-azure-pipelines-selenium-tests.side

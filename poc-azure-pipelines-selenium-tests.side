@@ -1,0 +1,87 @@
+{
+  "id": "75ea2bfb-c101-4c0a-94a9-3a432c476616",
+  "version": "2.0",
+  "name": "poc-azure-pipelines-selenium-tests",
+  "url": "https://www.bing.com",
+  "tests": [{
+    "id": "0a21ccf7-10b8-45bd-9490-0a452ad2df51",
+    "name": "test001",
+    "commands": [{
+      "id": "d9baab0a-82aa-43be-a6fe-19716fadbcbe",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8d063bba-3d2b-4c9e-a008-9aa8ee777a49",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x740",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7e7fea44-bca0-4b01-a2b6-78b4136619af",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=id_l",
+      "targets": [
+        ["id=id_l", "id"],
+        ["css=#id_l", "css:finder"],
+        ["xpath=//a[@id='id_l']", "xpath:attributes"],
+        ["xpath=//div[@id='id_h']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
+        ["xpath=//div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'dmendoza@aiqueous.com')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "cfbce8fd-a2a2-45b7-b3c0-c82f552d97f2",
+      "comment": "",
+      "command": "click",
+      "target": "id=sb_form_q",
+      "targets": [
+        ["id=sb_form_q", "id"],
+        ["name=q", "name"],
+        ["css=#sb_form_q", "css:finder"],
+        ["xpath=//textarea[@id='sb_form_q']", "xpath:attributes"],
+        ["xpath=//div[@id='sb_form_c']/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d4aa79c2-ab0e-4806-a6f4-9bccbf9ce330",
+      "comment": "",
+      "command": "type",
+      "target": "id=sb_form_q",
+      "targets": [
+        ["id=sb_form_q", "id"],
+        ["name=q", "name"],
+        ["css=#sb_form_q", "css:finder"],
+        ["xpath=//textarea[@id='sb_form_q']", "xpath:attributes"],
+        ["xpath=//div[@id='sb_form_c']/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "123 ABC"
+    }, {
+      "id": "0f7216dd-1cb8-46fe-8592-2072141e8527",
+      "comment": "",
+      "command": "click",
+      "target": "css=#search_icon > svg",
+      "targets": [
+        ["css=#search_icon > svg", "css:finder"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "e3f843a1-b6a2-4388-b83b-41a1a2e83061",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["0a21ccf7-10b8-45bd-9490-0a452ad2df51"]
+  }],
+  "urls": ["https://www.bing.com/"],
+  "plugins": []
+}
