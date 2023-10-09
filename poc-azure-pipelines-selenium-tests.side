@@ -20,58 +20,6 @@
       "target": "1050x740",
       "targets": [],
       "value": ""
-    }, {
-      "id": "7e7fea44-bca0-4b01-a2b6-78b4136619af",
-      "comment": "",
-      "command": "mouseOver",
-      "target": "id=id_l",
-      "targets": [
-        ["id=id_l", "id"],
-        ["css=#id_l", "css:finder"],
-        ["xpath=//a[@id='id_l']", "xpath:attributes"],
-        ["xpath=//div[@id='id_h']/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'dmendoza@aiqueous.com')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "cfbce8fd-a2a2-45b7-b3c0-c82f552d97f2",
-      "comment": "",
-      "command": "click",
-      "target": "id=sb_form_q",
-      "targets": [
-        ["id=sb_form_q", "id"],
-        ["name=q", "name"],
-        ["css=#sb_form_q", "css:finder"],
-        ["xpath=//textarea[@id='sb_form_q']", "xpath:attributes"],
-        ["xpath=//div[@id='sb_form_c']/div/textarea", "xpath:idRelative"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "d4aa79c2-ab0e-4806-a6f4-9bccbf9ce330",
-      "comment": "",
-      "command": "type",
-      "target": "id=sb_form_q",
-      "targets": [
-        ["id=sb_form_q", "id"],
-        ["name=q", "name"],
-        ["css=#sb_form_q", "css:finder"],
-        ["xpath=//textarea[@id='sb_form_q']", "xpath:attributes"],
-        ["xpath=//div[@id='sb_form_c']/div/textarea", "xpath:idRelative"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": "123 ABC"
-    }, {
-      "id": "0f7216dd-1cb8-46fe-8592-2072141e8527",
-      "comment": "",
-      "command": "click",
-      "target": "css=#search_icon > svg",
-      "targets": [
-        ["css=#search_icon > svg", "css:finder"]
-      ],
-      "value": ""
     }]
   }],
   "suites": [{
