@@ -1,60 +1,68 @@
-# Name of the GitHub Action Workflow
 name: Run Selenium Chrome SIDE File Tests
 
-# This workflow is triggered on every push to the repository
+# Specifies that the workflow should be triggered on every push to the repository
 on: [push]
 
 jobs:
+  # Defines a job named "test"
   test:
+    # Specifies that the job should run on the latest version of Ubuntu
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the code on the runner VM
+    # Checks out the repository code to the runner VM
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Install .NET SDK
+    # Sets up the specified .NET SDK version on the runner VM
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.x' # Adjust this to your project's .NET version
+        dotnet-version: '7.x' # Specifies the .NET version to be installed
 
-    # Build and run the Blazor app in the background on port 5158
+    # Builds and runs the Blazor app in the background on the specified ports
     - name: Build and Run Blazor App
       run: |
         cd POC.TestBlazorUI/POC.TestBlazorUI
         dotnet build
-        dotnet run --urls http://localhost:5158 &
+        dotnet run --urls "http://localhost:5158;https://localhost:7288" > app_output.txt 2>&1 &
+        sleep 10
+        cat app_output.txt
 
-    # Give the Blazor app some time to start
-    - name: Wait for Blazor App to start
-      run: sleep 15
+    # Checks if the Blazor app is actively listening on port 5158
+    - name: Check if Blazor App is Listening on Port 5158
+      run: |
+        netstat -an | grep 5158 || echo "Nothing is listening on port 5158"
 
-    # Installs selenium-side-runner on the runner VM
+    # Installs the selenium-side-runner tool globally on the runner VM
     - name: Install selenium-side-runner
       run: |
         npm install -g selenium-side-runner@3.17.0
 
-    # Check if port 9222 is available
+    # Checks if port 9222 is available on the runner VM
     - name: Check Port Availability
       run: |
         netstat -an | grep 9222 || echo "Port 9222 is available"
 
-    # Start the standalone Chrome in the background
+    # Starts a standalone Chrome instance in a Docker container
     - name: Start Chrome in Docker
       run: |
         docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome-debug
 
+    # Lists all running Docker containers
     - name: List Docker Containers
       run: docker ps
 
+    # Waits for 10 seconds to ensure the Docker container is fully up and running
     - name: Wait for a few seconds
       run: sleep 10
 
+    # Checks the status of the Selenium server running in the Docker container
     - name: Check Selenium Server
       run: |
         curl http://localhost:4444/status
 
+    # Retrieves and displays the logs from the Selenium Docker container
     - name: Check Selenium Docker Logs
       run: |
         CONTAINER_ID=$(docker ps -q --filter ancestor=selenium/standalone-chrome-debug)
@@ -62,17 +70,22 @@ jobs:
           docker logs $CONTAINER_ID
         fi
 
-    # Runs the Selenium IDE tests using the Dockerized Chrome
+    # Executes Selenium IDE tests using the Dockerized Chrome instance
     - name: Run Selenium IDE tests - Bing
       run: |
         SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled]" poc-azure-pipelines-selenium-tests.side
 
-    # Runs the Selenium IDE tests against the Blazor app
+    # Checks the health of the Blazor app by making a request to its endpoint
+    - name: Check Blazor App Health
+      run: |
+        curl http://localhost:5158/
+
+    # Executes Selenium IDE tests specifically targeting the Blazor app
     - name: Run Selenium IDE tests - POC.TestBlazorUI
       run: |
         SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled]" POC.TestBlazorUI.side
 
-    # Fetch Docker logs if there's a failure
+    # If any step in the workflow fails, this step fetches and displays the logs from the Selenium Docker container
     - name: Fetch Docker logs
       if: failure()
       run: |
@@ -80,4 +93,3 @@ jobs:
         if [ ! -z "$CONTAINER_ID" ]; then
           docker logs $CONTAINER_ID
         fi
-
