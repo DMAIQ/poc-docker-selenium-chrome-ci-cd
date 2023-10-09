@@ -47,7 +47,7 @@ jobs:
     # Starts a standalone Chrome instance in a Docker container
     - name: Start Chrome in Docker
       run: |
-        docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome-debug
+        docker run -d --network="host" --shm-size="2g" selenium/standalone-chrome-debug
 
     # Lists all running Docker containers
     - name: List Docker Containers
