@@ -48,7 +48,7 @@ jobs:
     # Runs the Selenium IDE tests using the Dockerized Chrome
     - name: Run Selenium IDE tests
       run: |
-        SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled,remote-debugging-port=9222]" poc-azure-pipelines-selenium-tests.side
+        SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled,remote-debugging-port=9222,user-data-dir=/tmp/chrome-temp]" poc-azure-pipelines-selenium-tests.side
 
 
     # Fetch Docker logs if there's a failure
