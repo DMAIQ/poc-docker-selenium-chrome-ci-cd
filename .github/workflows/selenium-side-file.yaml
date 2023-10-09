@@ -11,13 +11,13 @@ jobs:
     steps:
     # Checkout the code on the runner VM
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     # Install .NET SDK
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '5.x' # Adjust this to your project's .NET version
+        dotnet-version: '7.x' # Adjust this to your project's .NET version
 
     # Build and run the Blazor app in the background on port 5158
     - name: Build and Run Blazor App
