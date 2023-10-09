@@ -16,7 +16,7 @@ jobs:
     # Installs selenium-side-runner on the runner VM
     - name: Install selenium-side-runner
       run: |
-        npm install -g selenium-side-runner
+        npm install -g selenium-side-runner@3.17.0
 
     # Start the standalone Chrome in the background
     - name: Start Chrome in Docker
