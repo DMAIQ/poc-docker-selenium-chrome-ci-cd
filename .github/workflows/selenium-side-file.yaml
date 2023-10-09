@@ -26,7 +26,7 @@ jobs:
     # Start the standalone Chrome in the background
     - name: Start Chrome in Docker
       run: |
-        docker run -d -p 4444:4444 --shm-size="4g" selenium/standalone-chrome
+        docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome-debug
 
     - name: List Docker Containers
       run: docker ps
@@ -40,7 +40,7 @@ jobs:
 
     - name: Check Selenium Docker Logs
       run: |
-        CONTAINER_ID=$(docker ps -q --filter ancestor=selenium/standalone-chrome)
+        CONTAINER_ID=$(docker ps -q --filter ancestor=selenium/standalone-chrome-debug)
         if [ ! -z "$CONTAINER_ID" ]; then
           docker logs $CONTAINER_ID
         fi
@@ -48,14 +48,14 @@ jobs:
     # Runs the Selenium IDE tests using the Dockerized Chrome
     - name: Run Selenium IDE tests
       run: |
-        SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled,remote-debugging-port=9222,user-data-dir=/tmp/chrome-temp]" poc-azure-pipelines-selenium-tests.side
+        SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled]" poc-azure-pipelines-selenium-tests.side
 
 
     # Fetch Docker logs if there's a failure
     - name: Fetch Docker logs
       if: failure()
       run: |
-        CONTAINER_ID=$(docker ps -q --filter ancestor=selenium/standalone-chrome)
+        CONTAINER_ID=$(docker ps -q --filter ancestor=selenium/standalone-chrome-debug)
         if [ ! -z "$CONTAINER_ID" ]; then
           docker logs $CONTAINER_ID
         fi
