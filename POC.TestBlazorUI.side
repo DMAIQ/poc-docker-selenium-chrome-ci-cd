@@ -1,0 +1,134 @@
+{
+  "id": "b162edf7-d7e6-48df-942d-0e7e8fca1767",
+  "version": "2.0",
+  "name": "POC.TestBlazorUI",
+  "url": "http://localhost:5158",
+  "tests": [{
+    "id": "e609f4a0-1dce-44ce-b52c-0288b90c1aad",
+    "name": "Test002",
+    "commands": [{
+      "id": "d782bcc1-a7ab-4cd1-bb13-9ef3057a9982",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e2861e59-e5af-4b54-897f-0b36875c70d5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x740",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "38945bf7-9314-40a0-9b11-7db3220011d5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.active", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '')])[2]", "xpath:href"],
+        ["xpath=//nav/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "53a93496-246e-43ff-8ae7-d578468eec8b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Counter",
+      "targets": [
+        ["linkText=Counter", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Counter')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'counter')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Counter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e2e922c8-dcc3-4053-8315-59548ee3c743",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//article/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Click me')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a3303b8b-ec8d-49b8-9f9d-7a1c4ce2c8bd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//article/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Click me')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "315b2bdb-c878-4028-b368-b136df031d57",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//article/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Click me')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b98d104-6f82-4f6d-80fc-2a93097db91d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Fetch data",
+      "targets": [
+        ["linkText=Fetch data", "linkText"],
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Fetch data')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'fetchdata')]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Fetch data')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "06ca3847-67c4-4333-a4d2-a15115ba1e39",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=About",
+      "targets": [
+        ["linkText=About", "linkText"],
+        ["css=.top-row > a", "css:finder"],
+        ["xpath=//a[contains(text(),'About')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'https://docs.microsoft.com/aspnet/')]", "xpath:href"],
+        ["xpath=//main/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'About')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win7106",
+      "windowTimeout": 2000
+    }, {
+      "id": "8e75a961-5820-42b2-9ebb-445c6e70c9a3",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win7106}",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "a44e9274-de80-4850-aea6-a2c345b6eae7",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e609f4a0-1dce-44ce-b52c-0288b90c1aad"]
+  }],
+  "urls": ["http://localhost:5158/"],
+  "plugins": []
+}
