@@ -22,11 +22,11 @@ jobs:
     - name: Check Port Availability
       run: |
         netstat -an | grep 9222 || echo "Port 9222 is available"
-        
+
     # Start the standalone Chrome in the background
     - name: Start Chrome in Docker
       run: |
-        docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome
+        docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome:4.13.0-20231004
 
     - name: List Docker Containers
       run: docker ps
