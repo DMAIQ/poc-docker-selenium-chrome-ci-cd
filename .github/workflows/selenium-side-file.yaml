@@ -13,6 +13,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # Install .NET SDK
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.x' # Adjust this to your project's .NET version
+
+    # Build and run the Blazor app in the background on port 5158
+    - name: Build and Run Blazor App
+      run: |
+        cd POC.TestBlazorUI/POC.TestBlazorUI
+        dotnet build
+        dotnet run --urls http://localhost:5158 &
+
+    # Give the Blazor app some time to start
+    - name: Wait for Blazor App to start
+      run: sleep 15
+
     # Installs selenium-side-runner on the runner VM
     - name: Install selenium-side-runner
       run: |
@@ -46,10 +63,14 @@ jobs:
         fi
 
     # Runs the Selenium IDE tests using the Dockerized Chrome
-    - name: Run Selenium IDE tests
+    - name: Run Selenium IDE tests - Bing
       run: |
         SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled]" poc-azure-pipelines-selenium-tests.side
 
+    # Runs the Selenium IDE tests against the Blazor app
+    - name: Run Selenium IDE tests - POC.TestBlazorUI
+      run: |
+        SELENIUM_REMOTE_URL="http://localhost:4444/wd/hub" selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless,no-sandbox,disable-dev-shm-usage,disable-blink-features=AutomationControlled]" POC.TestBlazorUI.side
 
     # Fetch Docker logs if there's a failure
     - name: Fetch Docker logs
