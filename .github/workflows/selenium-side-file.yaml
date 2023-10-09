@@ -18,6 +18,11 @@ jobs:
       run: |
         npm install -g selenium-side-runner@3.17.0
 
+    # Check if port 9222 is available
+    - name: Check Port Availability
+      run: |
+        netstat -an | grep 9222 || echo "Port 9222 is available"
+        
     # Start the standalone Chrome in the background
     - name: Start Chrome in Docker
       run: |
